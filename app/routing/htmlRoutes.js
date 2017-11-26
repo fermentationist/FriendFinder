@@ -8,6 +8,10 @@ const htmlRoutes = function (app){
 	app.get(["/home", "/"], function (req, res){
 		return res.sendFile(path.join(__dirname, "../public/home.html"));
 	});
+
+	app.get(["survey.js"], function (req, res){
+		return res.sendFile(path.join(__dirname, "../public/assets/js/survey.js"));
+	});
 }
 
 module.exports = htmlRoutes;

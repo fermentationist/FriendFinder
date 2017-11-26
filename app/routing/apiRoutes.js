@@ -20,6 +20,9 @@ const apiRoutes = function (app){
 			console.log("file data = ", data);
 			let newData;
 			if (data !== ""){
+				console.log('data', data);
+				data = data.slice(1, data.length - 1);
+				console.log('data', data);
 				newData = `[${data},${JSON.stringify(req.body)}]`;
 			// let testJSON = JSON.parse(newData);
 			// console.log('testJSON', testJSON);

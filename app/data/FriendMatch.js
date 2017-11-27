@@ -1,31 +1,17 @@
-const FriendMatchModule = (function(){	
+console.log("FriendMatch.js loaded.");
+const FriendMatchModule = (function(){
 	const path = require("path");
 	const fs = require("fs");
 	const bodyParser = require("body-parser");
 
 	function processUserData (req, res){
+		console.log("processUserData called.");
 		let user = req.body;
-		let keys = Object.keys(user);
-		let reordered = {
-			name: user.name,
-			photo: user.photo
-		};
-		let scoreArray = [];
-		for (prop in user){
-			if (prop.slice(0,1) === "q"){
-				scoreArray.push(parseInt(user[prop]));
-			}
-		}
-		reordered.scores = scoreArray;
-		user = reordered;
 		console.log('user', user);
-		//changes to object...
-		//
-
 		if (isValid(user)){
 			let match = findMatch(user);
 			writeToFile(user);
-			console.log("returning match");
+			console.log("returning match", match);
 			return match;
 
 		}else{

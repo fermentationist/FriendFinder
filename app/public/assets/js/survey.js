@@ -1,4 +1,5 @@
 console.log("survey.js loaded.");
+localStorage.clear();
 const SurveyModule = (function(){
 	function displaySurvey (questionArray){
 		questionArray.forEach(function(question, i){
@@ -6,7 +7,7 @@ const SurveyModule = (function(){
 			let formGroup = $("<div>").attr("class", "form-group");
 			let headingStr = "<h4><strong>Question " + (i + 1) + "</strong></h4>";
 			let label = $("<label>").attr("for", ("q" + i)).html(headingStr);
-			let select = $("<select required>").attr("name", ("q" + i));
+			let select = $("<select required>").attr("name", ("q" + i)).attr("id", ("q" + i)).addClass("form-control");
 			let optionDiv = options(select);
 			formGroup.append(label).append(question).append(select);
 			$("#surveyQuestions").append(formGroup);
@@ -33,7 +34,46 @@ const SurveyModule = (function(){
 
 	return {displaySurvey: displaySurvey};
 })();
+
 const questions = ["You think that everyone’s views should be respected regardless of whether they are supported by facts or not.", "In a discussion, truth should be more important than people’s sensitivities."];
 console.log("questions", questions);
+
 SurveyModule.displaySurvey(questions);
+
+$("#submit").on("click", function (event) {
+    event.preventDefault();
+    let formData = {
+        name: $("#name").val().trim(),
+        photo: $("#photo").val().trim(),
+        scores: []
+    };
+
+    $(".form-control").each(function(){
+    	if ($(this).attr("id").slice(0,1) === "q"){
+    		(formData.scores).push(parseInt($(this).val()));
+    	}
+    });
+    console.log("formData", formData);
+    let location = window.location.origin;
+
+    $.ajax({
+            method:"POST",
+            url: location + "/api/friends",
+            data: JSON.stringify(formData),
+            contentType:"application/json",
+            success:function(data){
+                console.log("success!", data);
+                localStorage.setItem("match", data);
+                window.location = "../../modal.html";
+            },
+            error:function(req, status, error){
+                console.log(req,status,error);
+            }
+        });
+
+});
+
+
+
+
 

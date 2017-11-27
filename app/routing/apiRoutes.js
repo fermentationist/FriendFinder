@@ -4,13 +4,15 @@ const apiRoutes = function (app){
 
 	app.get("/api/friends", function (req, res){
 		console.log("'GET' api/friends");
-		res.sendFile(path.join(__dirname, {extensions: [".js"]}));
+		res.sendFile(path.join(__dirname, "../data/friends.js"));
 	});
 
 	app.post("/api/friends/", function (req, res){
+		console.log("POST received");
 		let match = FriendMatchModule.processUserData(req, res);
-		console.log("match is", match);
-		res.sendFile(path.join(__dirname, "../public/modal.html"));
+		res.header("Content-Type", "application/json");
+		res.json(JSON.stringify(match));
+		// res.sendFile(path.join(__dirname, "../public/modal.html"));
 	});
 }
 

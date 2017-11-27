@@ -10,24 +10,65 @@
   </head>
   <body>	
 	<div class="container">
-		<form action="api/friends" method="post">
-			<div id="surveyQuestions">
-			</div>
-			<button type="submit">submit</button>
-		</form>
+		<h2>Survey Questions</h2>
+		<hr>
+			<form action="api/friends" method="post">
+				<h4><strong>About You</strong></h4>
+				<label for="name"><h5>Name (required)</h5></label>
+				<input type="text" name="name" class = "form-control" placeholder="Enter name" required>
+				<br>
+				<label for="photo"><h5>Link to photo image (required)</h5></label>
+				<input type="text" name="photo" class="form-control" placeholder="Enter image URL" required>
+				<hr>
+				<div id="surveyQuestions">
+				</div>
+				<button type="submit" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#resultModal" id="submit">submit</button>
+			</form>
+			<hr>
 	</div>
-		
+	<div class="container">
+		<footer>
+			<p>
+			<a href="api/friends">API Friends List </a>|<a href="https://github.com/fermentationist/FriendFinder"> Github Repo</a>
+			</p>
 
-
-
-
+		</footer>
+<!-- 
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+		  Launch demo modal
+		</button> -->
 	</div>
+		<!-- Modal -->
+		<div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="resultModalLabel" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="resultModalLabel">Modal title</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        ...
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-primary">Save changes</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+
+
+
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 	<script src="assets/js/survey.js"></script>
+<!-- 	<script src="../data/FriendMatch.js"></script> -->
   </body>
 </html>
 

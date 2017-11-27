@@ -12,6 +12,10 @@ const htmlRoutes = function (app){
 	app.get(["survey.js"], function (req, res){
 		return res.sendFile(path.join(__dirname, "../public/assets/js/survey.js"));
 	});
+
+	app.get(["modal.js"], function (req, res){
+		return res.sendFile(path.join(__dirname, "../public/assets/js/modal.js"));
+	});
 }
 
 module.exports = htmlRoutes;

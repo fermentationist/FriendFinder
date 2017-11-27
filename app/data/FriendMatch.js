@@ -25,7 +25,8 @@ const FriendMatchModule = (function(){
 		if (isValid(user)){
 			let match = findMatch(user);
 			writeToFile(user);
-			showMatchModal(match);
+			console.log("returning match");
+			return match;
 
 		}else{
 			return alert("Invalid or incomplete submission. Please correct and retry.");
@@ -70,11 +71,6 @@ const FriendMatchModule = (function(){
 
 	function findMatch (user){
 		return user;
-	}
-
-	function showMatchModal (match){
-		//show modal
-		return;
 	}
 
 	return {processUserData: processUserData};

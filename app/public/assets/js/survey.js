@@ -32,56 +32,110 @@ const SurveyModule = (function(){
 		return selectElement;
 	}
 
-	return {displaySurvey: displaySurvey};
+	function showModal(match){
+		$("#resultModal").modal("show");
+		match = JSON.parse(match);
+		console.log('match', match);
+		$("#matchName").html("<h3>" + match.name + "</h3>");
+		let photo = $("<img>").attr("src", match.photo);
+		$("#matchPhoto").html(photo);
+		$("#resultModal").on("hidden.bs.modal", function(){
+			window.location = "/api/friends";
+		});
+	}
+
+	function setFormListener(){
+		$("#submit").on("click", function (event) {
+		    console.log('event', event);
+		    event.preventDefault();
+		    let formData = {
+		        name: $("#name").val().trim(),
+		        photo: $("#photo").val().trim(),
+		        scores: []
+		    };
+		    $(".form-control").each(function(){
+		    	if ($(this).attr("id").slice(0,1) === "q"){
+		    		(formData.scores).push(parseInt($(this).val()));
+		    	}
+		    });
+		    let location = window.location.origin;
+		    console.log('location', location);
+
+		    $.ajax({
+		            method:"POST",
+		            url: location + "/api/friends",
+		            data: JSON.stringify(formData),
+		            contentType:"application/json",
+		            traditional: true,
+		            success:function(data){
+		                console.log("success",data);
+		                return showModal(data);
+
+		            },
+		            error:function(req, status, error){
+		                console.log(req,status,error);
+		            }
+		        });
+
+
+			});
+	}
+
+	return {
+		displaySurvey: displaySurvey,
+		setFormListener: setFormListener
+	};
 })();
 
 const questions = ["You think that everyone’s views should be respected regardless of whether they are supported by facts or not.", "In a discussion, truth should be more important than people’s sensitivities."];
 console.log("questions", questions);
 
 SurveyModule.displaySurvey(questions);
+SurveyModule.setFormListener();
 
-$("#submit").on("click", function (event) {
-    console.log('event', event);
-    event.preventDefault();
-    let formData = {
-        name: $("#name").val().trim(),
-        photo: $("#photo").val().trim(),
-        scores: []
-    };
-    $(".form-control").each(function(){
-    	if ($(this).attr("id").slice(0,1) === "q"){
-    		(formData.scores).push(parseInt($(this).val()));
-    	}
-    });
-    let location = window.location.origin;
-    console.log('location', location);
+// $("#submit").on("click", function (event) {
+//     console.log('event', event);
+//     event.preventDefault();
+//     let formData = {
+//         name: $("#name").val().trim(),
+//         photo: $("#photo").val().trim(),
+//         scores: []
+//     };
+//     $(".form-control").each(function(){
+//     	if ($(this).attr("id").slice(0,1) === "q"){
+//     		(formData.scores).push(parseInt($(this).val()));
+//     	}
+//     });
+//     let location = window.location.origin;
+//     console.log('location', location);
 
-    $.ajax({
-            method:"POST",
-            url: location + "/api/friends",
-            data: JSON.stringify(formData),
-            contentType:"application/json",
-            traditional: true,
-            success:function(data){
-                console.log("success",data);
-            },
-            error:function(req, status, error){
-                console.log(req,status,error);
-            }
-        });
+//     $.ajax({
+//             method:"POST",
+//             url: location + "/api/friends",
+//             data: JSON.stringify(formData),
+//             contentType:"application/json",
+//             traditional: true,
+//             success:function(data){
+//                 console.log("success",data);
 
-
-
+//             },
+//             error:function(req, status, error){
+//                 console.log(req,status,error);
+//             }
+//         });
 
 
-    // $.post(location + '/api/friends', formData, function (response) {
-    //     if (response) {
-    // 		console.log("formData2 =", formData);
-    //     	localStorage.setItem("match", response);
-    //         alert(response);
-    //     }
-    // });
-});
+
+
+
+//     // $.post(location + '/api/friends', formData, function (response) {
+//     //     if (response) {
+//     // 		console.log("formData2 =", formData);
+//     //     	localStorage.setItem("match", response);
+//     //         alert(response);
+//     //     }
+//     // });
+// });
 
 
 

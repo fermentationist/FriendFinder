@@ -1,5 +1,6 @@
 console.log("FriendMatch.js loaded.");
-const FriendMatchModule = (function(){
+
+const FriendMatch = (function(){
 	const path = require("path");
 	const fs = require("fs");
 	const bodyParser = require("body-parser");
@@ -70,8 +71,8 @@ const FriendMatchModule = (function(){
 
 	return {
 		processUserData: processUserData,
-		sendMatch: sendMatch
+		sendMatch: sendMatch,
 	};
 })();
 
-module.exports = FriendMatchModule;
+module.exports = FriendMatch;

@@ -1,5 +1,5 @@
 console.log("survey.js loaded.");
-localStorage.clear();
+
 const SurveyModule = (function(){
 	function displaySurvey (questionArray){
 		questionArray.forEach(function(question, i){
@@ -41,36 +41,46 @@ console.log("questions", questions);
 SurveyModule.displaySurvey(questions);
 
 $("#submit").on("click", function (event) {
+    console.log('event', event);
     event.preventDefault();
     let formData = {
         name: $("#name").val().trim(),
         photo: $("#photo").val().trim(),
         scores: []
     };
-
     $(".form-control").each(function(){
     	if ($(this).attr("id").slice(0,1) === "q"){
     		(formData.scores).push(parseInt($(this).val()));
     	}
     });
-    console.log("formData", formData);
     let location = window.location.origin;
+    console.log('location', location);
 
     $.ajax({
             method:"POST",
             url: location + "/api/friends",
             data: JSON.stringify(formData),
             contentType:"application/json",
+            traditional: true,
             success:function(data){
-                console.log("success!", data);
-                localStorage.setItem("match", data);
-                window.location = "../../modal.html";
+                console.log("success",data);
             },
             error:function(req, status, error){
                 console.log(req,status,error);
             }
         });
 
+
+
+
+
+    // $.post(location + '/api/friends', formData, function (response) {
+    //     if (response) {
+    // 		console.log("formData2 =", formData);
+    //     	localStorage.setItem("match", response);
+    //         alert(response);
+    //     }
+    // });
 });
 
 

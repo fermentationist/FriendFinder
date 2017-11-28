@@ -4,7 +4,7 @@ const FriendMatchModule = (function(){
 	const fs = require("fs");
 	const bodyParser = require("body-parser");
 
-	function processUserData (req, res){
+	function processUserData (req, res, callback){
 		console.log("processUserData called.");
 		let user = req.body;
 		console.log('user', user);
@@ -12,23 +12,24 @@ const FriendMatchModule = (function(){
 			let match = findMatch(user);
 			writeToFile(user);
 			console.log("returning match", match);
-			return match;
+			return callback(res, match);
 
 		}else{
-			return alert("Invalid or incomplete submission. Please correct and retry.");
+			return console.log("Invalid or incomplete submission. Please correct and retry.");
 		}
 	}
 
 	function isValid (formInputObj){
 		for (prop in formInputObj){
 			if (!formInputObj[prop]){
+				console.log(`isValid(${formInputObj}[${prop}]) = false`);
 				return false;
 			}
 		}
 		return true;
 	}	
 
-	function writeToFile (obj){
+	function writeToFile (user){
 		let filePath = path.join(__dirname, "./friends.js");
 		let newData;
 		fs.readFile(filePath, "utf8", function (error, data){
@@ -36,10 +37,11 @@ const FriendMatchModule = (function(){
 				throw error.stack;
 			}
 			if (data !== ""){
+				findMatch(user, data);
 				data = data.slice(1, data.length - 1);
-				newData = `[${data},${JSON.stringify(obj)}]`;
+				newData = `[${data},${JSON.stringify(user)}]`;
 			}else{
-				newData = `[${JSON.stringify(obj)}]`;
+				newData = `[${JSON.stringify(user)}]`;
 			}
 			fs.writeFile(filePath, newData, function (error){
 				if (error){
@@ -55,11 +57,21 @@ const FriendMatchModule = (function(){
 
 	}
 
-	function findMatch (user){
+	function findMatch (user, friendList){
+		let friends = friendList;
+		console.log('friends', typeof friends);
 		return user;
 	}
 
-	return {processUserData: processUserData};
+	function sendMatch (res, match){
+		res.header("Content-Type", "application/json");
+		return res.json(JSON.stringify(match));
+	}
+
+	return {
+		processUserData: processUserData,
+		sendMatch: sendMatch
+	};
 })();
 
 module.exports = FriendMatchModule;

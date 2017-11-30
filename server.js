@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 8080;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-
+app.use(bodyParser.raw({ type: 'application/vnd.custom-type' }));
 app.use(express.static("app/public"));
 //express.static used to serve assets
 // //====================//Middleware router for HTML files//====================//

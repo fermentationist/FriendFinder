@@ -46,7 +46,6 @@ const SurveyModule = (function(){
 
 	function setFormListener(){
 		$("#submit").on("click", function (event) {
-		    console.log('event', event);
 		    event.preventDefault();
 		    let formData = {
 		        name: $("#name").val().trim(),
@@ -54,8 +53,9 @@ const SurveyModule = (function(){
 		        scores: []
 		    };
 		    $(".form-control").each(function(){
-		    	if ($(this).attr("id").slice(0,1) === "q"){
-		    		(formData.scores).push(parseInt($(this).val()));
+		    	let id = $(this).attr("id");
+		    	if (/q{1}\d+/.test(id)){//.slice(0,1) === "q"){
+		    		(formData.scores).push($(this).val());
 		    	}
 		    });
 		    let location = window.location.origin;
@@ -66,14 +66,15 @@ const SurveyModule = (function(){
 		            url: location + "/api/friends",
 		            data: JSON.stringify(formData),
 		            contentType:"application/json",
-		            traditional: true,
+		            // traditional: true,
 		            success:function(data){
 		                console.log("success",data);
 		                return showModal(data);
 
 		            },
 		            error:function(req, status, error){
-		                console.log(req,status,error);
+		            	console.log('req, status', req, status);
+		                console.log("error +==>", error);
 		            }
 		        });
 
@@ -87,55 +88,12 @@ const SurveyModule = (function(){
 	};
 })();
 
-const questions = ["You think that everyone’s views should be respected regardless of whether they are supported by facts or not.", "In a discussion, truth should be more important than people’s sensitivities."];
+const questions = ["Cilantro is disgusting."];//, "Ketchup is an appropriate dressing for a hot dog, which is not, by the way, a sandwich.", "Religion is worse than nonsense.", "You think that everyone’s views should be respected regardless of whether they are supported by facts or not.", "The Beatles made a more original contribution to musical culture than the Rolling Stones."];
 console.log("questions", questions);
 
 SurveyModule.displaySurvey(questions);
 SurveyModule.setFormListener();
 
-// $("#submit").on("click", function (event) {
-//     console.log('event', event);
-//     event.preventDefault();
-//     let formData = {
-//         name: $("#name").val().trim(),
-//         photo: $("#photo").val().trim(),
-//         scores: []
-//     };
-//     $(".form-control").each(function(){
-//     	if ($(this).attr("id").slice(0,1) === "q"){
-//     		(formData.scores).push(parseInt($(this).val()));
-//     	}
-//     });
-//     let location = window.location.origin;
-//     console.log('location', location);
-
-//     $.ajax({
-//             method:"POST",
-//             url: location + "/api/friends",
-//             data: JSON.stringify(formData),
-//             contentType:"application/json",
-//             traditional: true,
-//             success:function(data){
-//                 console.log("success",data);
-
-//             },
-//             error:function(req, status, error){
-//                 console.log(req,status,error);
-//             }
-//         });
-
-
-
-
-
-//     // $.post(location + '/api/friends', formData, function (response) {
-//     //     if (response) {
-//     // 		console.log("formData2 =", formData);
-//     //     	localStorage.setItem("match", response);
-//     //         alert(response);
-//     //     }
-//     // });
-// });
 
 
 

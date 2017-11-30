@@ -58,10 +58,24 @@ const FriendMatch = (function(){
 
 	}
 
-	function findMatch (user, friendList){
-		let friends = friendList;
-		console.log('friends', typeof friends);
-		return user;
+	function findMatch (userData){
+		let filePath = path.join(__dirname, "./friends.js");
+		let friends, oldData, newData;
+		fs.readFile(filePath, "utf8", function (error, data){
+			if (error){
+				throw error.stack;
+			}
+			if (data !== ""){
+				friends = data;
+				oldData = data.slice(1, data.length - 1);
+				console.log('oldData', oldData);
+				newData = `[${oldData},${JSON.stringify(userData)}]`;
+			}else{
+				newData = `[${JSON.stringify(userData)}]`;
+			}
+			console.log("friends...", friends);
+		return userData;
+		});
 	}
 
 	function sendMatch (res, match){

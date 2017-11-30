@@ -88,7 +88,7 @@ const SurveyModule = (function(){
 	};
 })();
 
-const questions = ["Cilantro is disgusting."];//, "Ketchup is an appropriate dressing for a hot dog, which is not, by the way, a sandwich.", "Religion is worse than nonsense.", "You think that everyone’s views should be respected regardless of whether they are supported by facts or not.", "The Beatles made a more original contribution to musical culture than the Rolling Stones."];
+const questions = ["Cilantro is disgusting.", "Ketchup is an appropriate dressing for a hot dog, which is not, by the way, a sandwich.", "Religion is worse than nonsense.", "You think that everyone’s views should be respected regardless of whether they are supported by facts or not.", "The Beatles made a more original contribution to musical culture than the Rolling Stones."];
 console.log("questions", questions);
 
 SurveyModule.displaySurvey(questions);

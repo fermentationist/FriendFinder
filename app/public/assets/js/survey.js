@@ -60,6 +60,7 @@ const SurveyModule = (function(){
 		    	}
 		    });
 		    let location = window.location.origin;
+		    console.log("formData", formData);
 		    console.log('location', location);
 
 		    $.ajax({

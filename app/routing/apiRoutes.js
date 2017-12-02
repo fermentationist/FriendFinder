@@ -1,5 +1,5 @@
 const apiRoutes = function (app){
-	const FriendMatch = require("../data/FriendMatch.js");
+	const FriendFinder = require("../data/FriendFinder.js");
 	const path = require("path");
 
 	app.get("/api/friends", function (req, res){
@@ -9,7 +9,7 @@ const apiRoutes = function (app){
 
 	app.post("/api/friends/", function (req, res){
 		console.log("POST received");
-		FriendMatch.processUserData(req, res, FriendMatch.sendMatch);
+		FriendFinder.processUserData(req, res, FriendFinder.sendMatch);
 	});
 }
 
